@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Main from './components/Main';
 import Update from './components/Update';
 import AuthorForm from './components/CreateOne';
 
 function App() {
-  // state var for the db stuff
+  // state var
   const [authors, setAuthors] = useState([]);
 
   return (
@@ -19,10 +19,10 @@ function App() {
           />
 
           {/* EDIT */}
-          <Route path="/authors/:id/edit" element={<Update />} />
+          <Route path="/:id/edit" element={<Update />} />
 
           {/* CREATE ONE */}
-          <Route path="/authors/new" element={<AuthorForm authors={authors} setAuthors={setAuthors} />} />
+          <Route path="/new" element={<AuthorForm authors={authors} setAuthors={setAuthors} />} />
         </Routes>
       </div>
     </div>

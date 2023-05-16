@@ -25,7 +25,7 @@ const Update = () => {
         e.preventDefault();
 
         const tempObjToSendToServer = {
-            name: name,
+            name
         };
 
         axios

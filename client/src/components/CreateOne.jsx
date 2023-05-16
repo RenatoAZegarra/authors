@@ -15,13 +15,13 @@ const AuthorForm = ({ authors, setAuthors }) => {
         e.preventDefault();
 
         const tempObjToSendToServer = {
-            name: name,
+            name
         };
 
         axios
             .post('http://localhost:8000/api/authors', tempObjToSendToServer)
             .then((serverRes) => {
-                console.log('✅', serverRes);
+                console.log('✅', serverRes.data);
                 setAuthors([...authors, serverRes.data]);
                 nav('/')
             })

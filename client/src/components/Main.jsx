@@ -12,7 +12,8 @@ const Main = ({ authors, setAuthors }) => {
             .get('http://localhost:8000/api/authors')
             .then((serverRes) => {
                 console.log('✅ SERVER SUCCESS => ', serverRes.data);
-                setAuthors(serverRes.data);
+                const sortedAuthors = serverRes.data.sort((a, b) => a.name.localeCompare(b.name));
+                setAuthors(sortedAuthors);
             })
             .catch((err) => {
                 console.log('❌ SERVER ERROR', err);
@@ -35,10 +36,9 @@ const Main = ({ authors, setAuthors }) => {
         <div>
             <h1>Favorite Authors</h1>
             <p>
-                <Link to={'/authors/new'}>Add an Author</Link>
+                <Link to={'/new'}>Add an Author</Link>
             </p>
             <p>We have quotes by:</p>
-            {/* LOOP OVER THE AUTHORS ARRAY */}
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -46,12 +46,13 @@ const Main = ({ authors, setAuthors }) => {
                         <th>Actions:</th>
                     </tr>
                 </thead>
+            {/* LOOP OVER THE AUTHORS ARRAY */}
                 <tbody>
                     {authors.map((author) => (
                         <tr key={author._id}>
                             <td>{author.name}</td>
                             <td>
-                                <Link to={`/authors/${author._id}/edit`}>
+                                <Link to={`/${author._id}/edit`}>
                                     <Button variant="primary">Edit</Button>
                                 </Link>{' '}|{' '}
                                 <Button variant="danger" onClick={() => deleteAuthor(author._id)}>
