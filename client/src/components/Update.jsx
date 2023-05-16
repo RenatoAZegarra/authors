@@ -8,9 +8,9 @@ const Update = () => {
     const nav = useNavigate();
 
     const { id } = useParams();
-    console.log(id);
 
     const [name, setName] = useState('');
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         axios
@@ -34,8 +34,15 @@ const Update = () => {
                 console.log('✅', serverRes.data);
                 nav("/");
             })
-            .catch((errRes) => {
-                console.log('❌', errRes);
+            .catch(err => {
+                console.log('❌', err);
+                const errorResponse = err.response.data.errors;
+                const errorArr = [];
+
+                for(const key of Object.keys(errorResponse)){
+                    errorArr.push(errorResponse[key].message);
+                }
+                setErrors(errorArr);
             });
     };
 
@@ -47,6 +54,9 @@ const Update = () => {
             </p>
             {/* FORM */}
             <p>Update Author:</p>
+            <div>
+            {errors.map((error, index) =>{ return( <p style={{color: "red"}}key={index}>{error}</p>)})}
+            </div>
             <Form onSubmit={updateAuthor}>
                 <Form.Group className="mb-3">
                     <Form.Label>Name:</Form.Label>
